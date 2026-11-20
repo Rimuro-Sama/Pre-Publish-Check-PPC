@@ -408,6 +408,23 @@ class Cli(BaseTemp):
         codigo, saida, _ = self.cli(str(self.raiz), cwd=self._tmp)
         self.assertEqual(1, codigo)
 
+    def test_pasta_cujo_nome_comeca_com_hifen(self):
+        # o caso real: um repositório chamado "-Sites-E-Aplicativos"
+        pasta = os.path.join(self._tmp, "-Meu-Projeto")
+        os.mkdir(pasta)
+        with open(os.path.join(pasta, "app.py"), "w") as f:
+            f.write(f'k = "{AWS}"\n')
+        codigo, saida, _ = self.cli(pasta.replace(self._tmp, ".").replace("\\", "/"), cwd=self._tmp)
+        self.assertEqual(1, codigo)
+        self.assertIn("segredo-aws", saida)
+        codigo, _, erro = self.cli("--opcao-inexistente")
+        self.assertEqual(2, codigo)
+        self.assertIn("argumentos não reconhecidos", erro)
+
+    def test_argumento_desconhecido_que_nao_e_pasta_da_erro(self):
+        codigo, _, erro = self.cli("--banana")
+        self.assertEqual(2, codigo)
+
     def test_modulo_roda_com_python_m(self):
         codigo, _, err = self.cli("--help")
         self.assertEqual(0, codigo, err)

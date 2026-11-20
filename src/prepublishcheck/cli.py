@@ -63,7 +63,15 @@ def _saida_tolerante():
 
 def main(argv: Optional[List[str]] = None) -> int:
     _saida_tolerante()
-    args = _parser().parse_args(argv)
+    parser = _parser()
+    args, resto = parser.parse_known_args(argv)
+    if resto:
+        # Uma pasta cujo nome começa com "-" (ex.: "-Meu-Projeto") parece uma opção para o argparse. Se o argumento
+        # que sobrou é uma pasta que existe, é ela que o usuário quis analisar.
+        if len(resto) == 1 and os.path.isdir(resto[0]) and args.caminho == ".":
+            args.caminho = resto[0]
+        else:
+            parser.error("argumentos não reconhecidos: " + " ".join(resto) + "  (para uma pasta que começa com '-', use ./pasta ou -- pasta)")
     if args.list_rules:
         print(_lista_regras())
         return 0

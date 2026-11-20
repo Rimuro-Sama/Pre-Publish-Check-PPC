@@ -125,6 +125,13 @@ class DadosPessoais(unittest.TestCase):
             with self.subTest(e):
                 self.assertEqual([], regras("a.txt", f"{e}\n"))
 
+    def test_email_de_exemplo_dentro_de_placeholder_de_formulario_nao_dispara(self):
+        self.assertEqual([], regras("a.html", '<input type="email" placeholder="seu@provedor.com">\n'))
+        self.assertEqual([], regras("a.html", "<input placeholder = 'nome@dominio.com.br'>\n"))
+        # mas um e-mail real no mesmo arquivo continua sendo achado
+        self.assertIn("pii-email", regras("a.html", f'<input placeholder="x">\n<p>fale com {EMAIL}</p>\n'))
+        self.assertIn("pii-email", regras("a.html", f'<input value="{EMAIL}">\n'))
+
     def test_provedores_reais_de_email_NAO_sao_tratados_como_exemplo(self):
         # mail.com, email.com e domain.com são empresas de verdade: endereços ali são de pessoas reais
         for dominio in ("mail.com", "email.com", "domain.com", "gmail.com", "outlook.com"):

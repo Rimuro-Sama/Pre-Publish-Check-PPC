@@ -225,6 +225,8 @@ def _pessoais(linha: str, ctx: Contexto, texto_livre: bool) -> Iterator[Casament
     for m in EMAIL.finditer(linha):
         if any(ini <= m.start() < fim for ini, fim in em_url):
             continue
+        if re.search(r"""placeholder\s*=\s*["']$""", linha[:m.start()], re.I):
+            continue                  # texto de exemplo dentro de um campo de formulário (placeholder="seu@email.com")
         if not email_ignorado(m.group(0), ctx):
             yield Casamento("pii-email", oculta_email(m.group(0)), m.group(0).lower())
     for m in TELEFONE.finditer(linha):
