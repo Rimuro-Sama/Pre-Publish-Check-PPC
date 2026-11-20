@@ -1,0 +1,24 @@
+# Os testes usam dados FICTÍCIOS de propósito (CPF de teste, e-mails e nomes de mentira, segredos montados em pedaços)
+# para provar que a ferramenta os detecta. O código-fonte em src/ é analisado normalmente.
+tests/**::pii-cpf
+tests/**::pii-cnpj
+tests/**::pii-email
+tests/**::pii-telefone
+tests/**::pii-nome-completo
+tests/**::pii-lista-de-pessoas
+tests/**::segredo-atribuicao
+tests/**::segredo-url-credenciais
+tests/**::segredo-hash-senha
+tests/**::caminho-local
+tests/**::placeholder-esquecido
+tests/**::licenca-restricao
+
+# o catálogo e o detector citam marcadores de exemplo para explicar/implementar a regra
+src/prepublishcheck/rules.py::placeholder-esquecido
+src/prepublishcheck/textscan.py::placeholder-esquecido
+
+# o README descreve os erros que motivaram a ferramenta, citando de propósito exemplos de cada um
+README.md::placeholder-esquecido
+README.md::caminho-local
+README.md::licenca-restricao
+README.md::segredo-atribuicao
