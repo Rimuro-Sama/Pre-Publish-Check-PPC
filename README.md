@@ -242,7 +242,10 @@ Esse uso real também achou **defeitos na própria ferramenta**, que foram corri
 - **Não troca nem apaga nada por você.** Se achar algo no histórico, a correção (repositório novo com histórico limpo, ou `git filter-repo` com push forçado) é decisão sua.
 - **Repositórios muito grandes:** o `--history` lê o `git log -p` inteiro (limitado por `--max-commits`) e pode demorar.
 - **Não substitui** ferramentas dedicadas de varredura de segredos (como gitleaks ou trufflehog), que têm bases de padrões muito maiores. A ideia aqui é complementar: foco em dados pessoais brasileiros, material de terceiros e no histórico de repositórios de estudo.
-- **Nenhuma licença foi definida ainda.** Sem licença, o código é "todos os direitos reservados": pode ser visto, mas não reutilizado.
+
+## Licença
+
+[MIT](LICENSE): você pode usar, copiar e modificar este código, inclusive em projetos comerciais, mantendo o aviso de copyright. O código é fornecido sem garantia.
 
 ## Sobre o desenvolvimento
 
