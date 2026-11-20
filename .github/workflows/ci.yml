@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  testes:
+    name: Python ${{ matrix.python }} em ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: ubuntu-latest, python: "3.9" }
+          - { os: ubuntu-latest, python: "3.10" }
+          - { os: ubuntu-latest, python: "3.11" }
+          - { os: ubuntu-latest, python: "3.12" }
+          - { os: ubuntu-latest, python: "3.13" }
+          - { os: windows-latest, python: "3.9" }
+          - { os: windows-latest, python: "3.13" }
+          - { os: macos-latest, python: "3.13" }
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0            # histórico completo: a autoanálise abaixo usa --history
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: Testes
+        run: python -m unittest discover -s tests -v
+
+      - name: Instalar como o usuário instalaria
+        run: |
+          python -m pip install .
+          ppc --version
+
+      # A ferramenta se aplica a si mesma, histórico incluído: o repositório não pode publicar o que ela mesma acusa.
+      - name: Autoanálise (ppc sobre este repositório)
+        run: ppc . --history
