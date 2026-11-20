@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pre-publish-check"
+version = "1.0.0"
+description = "Confere um repositório antes de torná-lo público: segredos, dados pessoais, material de terceiros e histórico do git."
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = []          # só a biblioteca padrão do Python
+keywords = ["security", "secrets", "pii", "git", "pre-commit", "lgpd"]
+
+[project.scripts]
+ppc = "prepublishcheck.cli:main"
+pre-publish-check = "prepublishcheck.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
