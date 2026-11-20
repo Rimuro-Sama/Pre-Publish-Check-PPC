@@ -203,7 +203,8 @@ Este repositório roda o `ppc` sobre si mesmo no próprio CI.
 
 ## Como foi testado
 
-**113 testes** (`python -m unittest discover -s tests`), sem dependências:
+**113 testes** (`python -m unittest discover -s tests`), sem dependências. O CI roda tudo em **8 combinações**: Python 3.9 a 3.13 em Linux, Python 3.9 e 3.13 em **Windows** e 3.13 em macOS, e depois a ferramenta se analisa a si mesma, histórico incluído.
+
 
 | Arquivo | O que cobre |
 |---|---|
